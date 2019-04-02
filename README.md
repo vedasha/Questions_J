@@ -1,5 +1,7 @@
 # Questions_J
 
+## Seller_Dynamic_Rate
+
 To be done in Spark/MapReduce
 An Ecom website calculates price of any item dynamically. Dynamic price of any product is computed when user clicks on that product and it is based on prices other competitors are offering at that moment
 Calculate the price of item subject to following requirements
