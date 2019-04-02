@@ -67,6 +67,21 @@ spark = SparkSession.builder.appName('pyspark-dict').getOrCreate()
  from pyspark.sql.functions import monotonically_increasing_id
  res = email.withColumn("seq_id", monotonically_increasing_id())
 
+ 
+ #QUESTION6
+ #6)	Create a  sample smartsheet using below link
+#(https://www.smartsheet.com/(need to create a account first)
+#Read the data from this smartsheet using its api and post it to  AWS bucket
+#with bucketname='test_bucket'(note the bucket has server-side AES256 encryption enabled)
+#key='test_key'
+#using python
+import boto3
+import boto3.s3
+from simple_smartsheet import Smartsheet
+TOKEN = "XXXXXXX"
+smartsheet = Smartsheet(TOKEN)
+my_sheet = smartsheet.sheets.get("sample_data")
+s3 = boto3.client('s3')
 
 #QUESTION7
 #Write a code snippet to do pivot table of a dataframe using pandas(assume some data)
