@@ -64,6 +64,7 @@ spark = SparkSession.builder.appName('pyspark-dict').getOrCreate()
 
  #QUESTION 5
  #5)	Using pyspark, create snippet to generate a sequential id column in a dataframe
+ 
  from pyspark.sql.functions import monotonically_increasing_id
  res = email.withColumn("seq_id", monotonically_increasing_id())
 
@@ -75,13 +76,31 @@ spark = SparkSession.builder.appName('pyspark-dict').getOrCreate()
 #with bucketname='test_bucket'(note the bucket has server-side AES256 encryption enabled)
 #key='test_key'
 #using python
+
 import boto3
 import boto3.s3
 from simple_smartsheet import Smartsheet
+
+#Accessing and Saving the smartsheet file in local
 TOKEN = "XXXXXXX"
 smartsheet = Smartsheet(TOKEN)
 my_sheet = smartsheet.sheets.get("sample_data")
+filePath='/xxx/xxx/python/file/my_sample.txt'
+data = open(filePath,'a')
+for MyRow in my_sheet.rows:
+    for MyCell in MyRow.cells:
+       
+        if (MyCell.value):
+            m =  str(MyCell.value)+ ","
+            data.write(m)
+               
+    data.write("\n")           
+    #print('')
+data.close()
+
+#Uploading to S3 bucket
 s3 = boto3.client('s3')
+s3.upload_file('/xxx/xxx/python/file/my_sample.txt', 'vedashatestbucket','my_sample.txt')
 
 #QUESTION7
 #Write a code snippet to do pivot table of a dataframe using pandas(assume some data)
