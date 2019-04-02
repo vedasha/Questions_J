@@ -98,6 +98,14 @@ for MyRow in my_sheet.rows:
     #print('')
 data.close()
 
+
+#M1706107:. xxx$ cat /Users/xxx/python/file/my_sample.txt
+#EMPID,NAME,EMPSAL,DOJ,
+#1.0,MAXWELL,10000.0,2012.0,
+#3.0,PETER,23455.0,2007.0,
+#2.0,JULIE,2334567.0,2018.0,
+#5.0,mmmm,67.0,2011.0,
+
 #Uploading to S3 bucket
 s3 = boto3.client('s3')
 s3.upload_file('/xxx/xxx/python/file/my_sample.txt', 'vedashatestbucket','my_sample.txt')
