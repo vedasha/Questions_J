@@ -17,7 +17,7 @@ final-Price
 TimeStamp
 Cheapest Price amongst all Rivals
 Rival name
-To be done in Hive
+##To be done in Hive
 Write hive DDLs/DMLs to load competitor’s data into partitioned hive table, where partitions are created per competitor after replacing “.” by “_” in name.
 Sample table should look like productId price saleEvent fetchTS rivalName(Partitioned Column)
 82545658
