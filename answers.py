@@ -24,6 +24,14 @@ spark.sql("SET hive.merge.mapredfiles=false")
 spark.sql("SET hive.merge.smallfiles.avgsize=16000000")
 spark.sql("SET hive.execution.engine=mr")
 
+
+#Using hive context
+val hiveContext = new HiveContext(sparkContext)
+hiveContext.setConf("hive.merge.mapredfiles", "false")
+hiveContext.setConf("hive.merge.smallfiles.avgsize", "16000000")
+hiveContext.setConf("hive.execution.engine", "mr") 
+
+
 #QUESTION 3
 #3)	Assume there is a column called email in a dataframe
 #create a code snippet to generate a new column email_valid_flag which flags if the email is valid or not
@@ -41,6 +49,12 @@ import re
 
 pattern = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")  # this is the regex expression to search on
 df['email_valid_flag'] = df['email'].apply(lambda x: True if pattern.match(x) else False)
+
+
+#pyspark
+ email = spark.read.csv('/xxx/xxx/python/emal.csv',header=True,inferSchema=True)
+df = email.rdd.map(lambda x : validate_email(x.getAs[String]("EMAIL")))
+
 
 #QUESTION 4
 #4)	Convert a dataframe to list of dicts and read the same into a another dataframe with prefix of "a_" apended to the original column name (assume some data)
