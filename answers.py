@@ -58,8 +58,24 @@ dict_to_df.rename(columns=lambda x: "a_"+x , inplace=True)
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.appName('pyspark-dict').getOrCreate()
  email = spark.read.csv('/xxx/xxx/python/email.csv',header=True,inferSchema=True)
+ #DF to dictionary
+ val dict = email.toPandas().T.to_dict('list')
+ #{0: [1, 'vm.mk@gk.com'], 1: [2, 'dj.kk@gym.com'], 2: [3, 'hkkio']}
+dict_df = spark.sparkContext.parallelize(dict)
 
+#Dictinary to DF
+from pyspark.sql import Row
+from collections import OrderedDict
 
+def convert_to_row(d: dict) -> Row:
+    return Row(**OrderedDict(sorted(d.items())))
+
+dict_df.map(convert_to_row).toDF()
+
+#Column Rename
+from pyspark.sql.functions import col
+email.select([col(c).alias("a_" + str(c)) for c in email.columns])
+#DataFrame[a_ID: int, a_EMAIL: string]
 
 
  #QUESTION 5
