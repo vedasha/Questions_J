@@ -25,7 +25,7 @@ spark.sql("SET hive.merge.smallfiles.avgsize=16000000")
 spark.sql("SET hive.execution.engine=mr")
 
 
-#Using hive context
+#Using hive context#scala
 val hiveContext = new HiveContext(sparkContext)
 hiveContext.setConf("hive.merge.mapredfiles", "false")
 hiveContext.setConf("hive.merge.smallfiles.avgsize", "16000000")
@@ -73,13 +73,13 @@ from pyspark.sql import SparkSession
 spark = SparkSession.builder.appName('pyspark-dict').getOrCreate()
  email = spark.read.csv('/xxx/xxx/python/email.csv',header=True,inferSchema=True)
  #DF to dictionary
- val dict = email.toPandas().T.to_dict('list')
+  dict = email.toPandas().T.to_dict('list')
  #{0: [1, 'vm.mk@gk.com'], 1: [2, 'dj.kk@gym.com'], 2: [3, 'hkkio']}
-dict_df = spark.sparkContext.parallelize(dict)
 
 #Dictinary to DF
 from pyspark.sql import Row
 from collections import OrderedDict
+dict_df = spark.sparkContext.parallelize(dict)
 
 def convert_to_row(d: dict) -> Row:
     return Row(**OrderedDict(sorted(d.items())))
